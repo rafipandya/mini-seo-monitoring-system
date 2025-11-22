@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini SEO monitoring system</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="header">Mini SEO Monitoring System</h1>
+
+        <input class="input-field" id="keywords" placeholder="Please input your keywords"></input>
+
+        <div class="btn-container">
+            <button class="btn-click search" onclick="runSerpSeo()">Search SEO</button>
+            <a id="download" href="#" download>
+                <button class="btn-click download">Download CSV</button>
+            </a>
+        </div>
+    </div>
+
+    <div id="loading" class="loading" style="display:none">
+        Loading... please wait
+    </div>
+
+    <div id="result"></div>
+        
+    <script>
+        async function runSerpSeo() {
+            const input = document.getElementById("keywords").value.trim();
+            if (!input) return alert("Please insert your keyword first");
+
+            const keywords = input.split("\n");
+
+            document.getElementById("loading").style.display = "block";
+            document.getElementById("result").innerHTML = "";
+            
+            try {
+                const res = await fetch("/api/serp", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ keywords })
+                });
+
+                const data = await res.json();
+
+                if (data.result) {
+                    let html = `
+                        <table>
+                        <tr>
+                            <th>Keyword</th>
+                            <th>Judul</th>
+                            <th>URL</th>
+                            <th>Posisi</th>
+                            <th>Tanggal</th>
+                        </tr>
+                    `;
+
+                    data.result.forEach(row => {
+                        html += `
+                        <tr>
+                            <td>${row.keyword}</td>
+                            <td>${row.title}</td>
+                            <td><a href="${row.url}" target="_blank">${row.url}</a></td>
+                            <td>${row.position}</td>
+                            <td>${row.date}</td>
+                        </tr>
+                        `;
+                    });
+
+                    html += `</table>`;
+                    document.getElementById("result").innerHTML = html;
+
+                    const download = document.getElementById("download");
+                    download.style.display = "inline-block";
+                    download.href = data.csvFile;
+                }
+            } catch (err) {
+                // logging error
+                console.log(err);
+                alert("sorry, something went wrong");
+            } finally {
+                document.getElementById("loading").style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

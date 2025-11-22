@@ -1,0 +1,86 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* styling for SEO actions */
+.container {
+    display: grid;
+    gap: 16px;
+    min-width: 200px;
+    max-width: 400px;
+    padding: 16px;
+    margin: 40px auto 0;
+    width: 100%;
+}
+
+.header {
+    font-size: 24px;
+    text-align: center;
+}
+
+.input-field {
+    height: 30px;
+    padding: 0 8px;
+}
+
+.input-field::placeholder {
+    color: #d0d0d0;
+}
+
+.btn-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+}
+
+.btn-click {
+    width: 100%;
+    height: 40px;
+    border: none;
+    color: #FFFFFF;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-click.search {
+    background-color: #6710FF;
+}
+
+.btn-click.search:hover {
+    background-color: #4e05cc;
+}
+
+.btn-click.download {
+    background: #FF009B;
+}
+
+.btn-click.download:hover {
+    background: #df0186;
+}
+
+.loading {
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* styling for table results */
+#result table {
+    margin: 20px auto;
+    border-collapse: collapse;
+    border: 2px solid #CCCCCC;
+}
+
+#result th, #result td {
+    border: 1px solid #CCCCCC;
+    padding: 8px 12px;
+    text-align: left;
+}
+
+#result th {
+    background: #F5F5F5;
+    font-weight: bold;
+}
