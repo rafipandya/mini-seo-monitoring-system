@@ -3,6 +3,10 @@ import cors from "cors";
 import { getJson } from "serpapi";
 import { Parser } from "json2csv";
 import fs from "fs";
+import dotenv from "dotenv";
+
+// first to load .env
+dotenv.config();
 
 const app = express();
 app.use(cors());
@@ -10,7 +14,13 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Api key for SERP (google search) api
-const SERP_API_KEY = "4010afea5e43435570ec6cb9143f763d597fcb12aeb3daa5bbd425d55a6e2fed";
+const SERP_API_KEY = process.env.SERP_API_KEY;
+
+if(!SERP_API_KEY) {
+    // Log error
+    console.error("SERP_API_KEY is missing!");
+    process.exit();
+}
 
 // Initiate SERP function
 async function fetchSerp(keyword) {

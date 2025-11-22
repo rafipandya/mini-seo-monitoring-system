@@ -15,7 +15,7 @@
         <div class="btn-container">
             <button class="btn-click search" onclick="runSerpSeo()">Search SEO</button>
             <a id="download" href="#" download>
-                <button class="btn-click download">Download CSV</button>
+                <button class="btn-click download" id="downloadCsv" disabled>Download CSV</button>
             </a>
         </div>
     </div>
@@ -35,6 +35,7 @@
 
             document.getElementById("loading").style.display = "block";
             document.getElementById("result").innerHTML = "";
+            document.getElementById("downloadCsv").disabled = true;
             
             try {
                 const res = await fetch("/api/serp", {
@@ -73,8 +74,10 @@
                     document.getElementById("result").innerHTML = html;
 
                     const download = document.getElementById("download");
+                    const downloadCsv = document.getElementById("downloadCsv");
                     download.style.display = "inline-block";
-                    download.href = data.csvFile;
+                    download.href = `/${data.csvFile}`;
+                    downloadCsv.disabled = false;
                 }
             } catch (err) {
                 // logging error

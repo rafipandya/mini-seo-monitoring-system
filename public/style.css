@@ -8,7 +8,7 @@ body {
     display: grid;
     gap: 16px;
     min-width: 200px;
-    max-width: 400px;
+    max-width: 500px;
     padding: 16px;
     margin: 40px auto 0;
     width: 100%;
@@ -58,6 +58,12 @@ body {
 
 .btn-click.download:hover {
     background: #df0186;
+}
+
+.btn-click.download:disabled {
+    /* background: #b55c93; */
+    opacity: 0.3;
+    cursor: not-allowed;
 }
 
 .loading {
